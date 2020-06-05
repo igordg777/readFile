@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id='text' type="text">
+    <p><input type="file" id='file-input' required></p>
+
+    <button id="search">Поиск</button>
+    <div id='out'></div>
+    <!-- <script src="index.js"></script> -->
+    <script>
+        let fileInput = document.querySelector('#file-input');
+        let button = document.querySelector('#search');
+        let input = document.querySelector('#text');
+
+        button.addEventListener('click', function () {
+            console.log(input.value)
+            let file = fileInput.files[0];
+            let reader = new FileReader();
+            reader.onload = function () {
+                readTheme(reader.result.split('\r\n'))
+            }
+            reader.readAsText(file);
+        })
+
+        function readTheme(words) {
+
+            let count = 0;
+            for (let i = 0; i < words.length; i++) {
+
+                if (words[i].toLowerCase().indexOf(input.value.toLowerCase()) != -1) {
+                    count++
+                }
+            }
+
+            console.log(count)
+            document.querySelector('#out').innerHTML = `Результаты поиска: <span style='color: red'>${count}</span><br>${words}`;
+        }
+    </script>
+</body>
+
+</html>
